@@ -3,36 +3,81 @@ import React, { useState } from "react";
 const questions = [
   {
     key: "ageGroup",
-    question: "You belong to which age group?",
+    question: "Specify your age group",
     options: [
-      { label: "10–15 years", value: 5 },
-      { label: "15–20 years", value: 10 },
-      { label: "20–25 years", value: 20 },
+      { label: "Less than 25", value: 5 },
+      { label: "25–35 years", value: 10 },
+      { label: "36–50 years", value: 15 },
+      { label: "51–60 years", value: 10 },
+      { label: "60 years & above", value: 5 },
     ],
   },
   {
-    key: "lifeInsurance",
-    question: "Do you have life insurance?",
+    key: "dependents",
+    question: "How many people are financially dependent on you?",
     options: [
-      { label: "Yes", value: 20 },
-      { label: "No", value: 0 },
+      { label: "0", value: 20 },
+      { label: "1", value: 15 },
+      { label: "2", value: 10 },
+      { label: "3", value: 5 },
+      { label: "3 & more", value: 0 },
+    ],
+  },
+  {
+    key: "occupation",
+    question: "What's your occupation?",
+    options: [
+      { label: "Salaried", value: 15 },
+      { label: "Self Employed", value: 10 },
     ],
   },
   {
     key: "monthlyIncome",
-    question: "What is your monthly income?",
+    question: "What's your monthly income range?",
     options: [
-      { label: "Less than ₹20,000", value: 0 },
-      { label: "₹20,000 – ₹50,000", value: 15 },
-      { label: "Above ₹50,000", value: 30 },
+      { label: "Less than 50k", value: 5 },
+      { label: "50k–1L", value: 10 },
+      { label: "1L–3L", value: 15 },
+      { label: "3L & above", value: 20 },
     ],
   },
   {
-    key: "investments",
-    question: "Do you have any investments?",
+    key: "incomeSecurity",
+    question:
+      "How secure do you feel are your current & future income sources?",
     options: [
-      { label: "Yes", value: 30 },
-      { label: "No", value: 0 },
+      { label: "Stable", value: 20 },
+      { label: "Variable", value: 10 },
+    ],
+  },
+  {
+    key: "investmentUnderstanding",
+    question: "How well do you think you understand investing?",
+    options: [
+      { label: "Newbie", value: 5 },
+      { label: "Beginner", value: 10 },
+      { label: "Proficient", value: 20 },
+    ],
+  },
+  {
+    key: "mindset",
+    question: "Which of the following best describes your mindset?",
+    options: [
+      { label: "Comfortable with High Risk & High Return", value: 20 },
+      { label: "Comfortable with Low Risk & Fixed Return", value: 10 },
+      { label: "Comfortable with Moderate Risk & Moderate Return", value: 15 },
+    ],
+  },
+  {
+    key: "financialGoals",
+    question: "What are your financial goals?",
+    options: [
+      { label: "Saving", value: 5 },
+      { label: "Retirement Planning", value: 20 },
+      { label: "Electronics Purchase", value: 5 },
+      { label: "Automobile", value: 10 },
+      { label: "House", value: 20 },
+      { label: "Child Education", value: 20 },
     ],
   },
 ];
