@@ -1,0 +1,10 @@
+prompt1-
+I want to make a chatbot application for financial inclusion and understand finalncial status of an individual like life insurance, health insurance, income, investment. Where can i generate wireframes for the app that has login feature? 
+I have pre-defined set of questions.
+user will be needed to answer these questions in form of a chatbot.
+based on asnwers of the questions, the app should generate a risk score.
+Please give me some wireframes where i can customize.
+
+
+prompt2-
+I want to make a chatbot application for financial inclusion and understand finalncial status of an individual like life insurance, health insurance, income, investment. Where can i generate wireframes for the app that has login feature?  I have pre-defined set of questions. user will be needed to answer these questions in form of a chatbot. based on asnwers of the questions, the app should generate a risk score. Please give me some wireframes where i can customize. can you make the application that i can demo in mobile UI for this?
