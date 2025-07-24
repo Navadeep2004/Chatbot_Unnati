@@ -1,18 +1,40 @@
 import React, { useState } from "react";
 
 const questions = [
-  { key: "lifeInsurance", question: "Do you have life insurance?", weight: 20 },
   {
-    key: "healthInsurance",
-    question: "Do you have health insurance?",
-    weight: 20,
+    key: "ageGroup",
+    question: "You belong to which age group?",
+    options: [
+      { label: "10–15 years", value: 5 },
+      { label: "15–20 years", value: 10 },
+      { label: "20–25 years", value: 20 },
+    ],
+  },
+  {
+    key: "lifeInsurance",
+    question: "Do you have life insurance?",
+    options: [
+      { label: "Yes", value: 20 },
+      { label: "No", value: 0 },
+    ],
   },
   {
     key: "monthlyIncome",
     question: "What is your monthly income?",
-    weight: 30,
+    options: [
+      { label: "Less than ₹20,000", value: 0 },
+      { label: "₹20,000 – ₹50,000", value: 15 },
+      { label: "Above ₹50,000", value: 30 },
+    ],
   },
-  { key: "investments", question: "Do you have any investments?", weight: 30 },
+  {
+    key: "investments",
+    question: "Do you have any investments?",
+    options: [
+      { label: "Yes", value: 30 },
+      { label: "No", value: 0 },
+    ],
+  },
 ];
 
 export default function App() {
@@ -21,90 +43,115 @@ export default function App() {
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
 
-  const handleNext = () => {
+  const currentQuestion = questions[step];
+
+  const handleOptionSelect = (option) => {
+    const updatedAnswers = {
+      ...answers,
+      [currentQuestion.key]: option.value,
+    };
+    setAnswers(updatedAnswers);
+
     if (step + 1 < questions.length) {
-      setStep(step + 1);
+      setTimeout(() => setStep(step + 1), 300);
     } else {
-      calculateScore();
+      calculateScore(updatedAnswers);
     }
   };
 
-  const calculateScore = () => {
-    let total = 0;
-    questions.forEach((q) => {
-      const answer = answers[q.key]?.toLowerCase();
-      if (q.key === "monthlyIncome") {
-        const income = parseInt(answers[q.key], 10);
-        if (income > 50000) total += q.weight;
-        else if (income > 20000) total += q.weight * 0.5;
-      } else {
-        if (answer === "yes") total += q.weight;
-      }
-    });
+  const calculateScore = (finalAnswers) => {
+    const total = Object.values(finalAnswers).reduce((a, b) => a + b, 0);
     setScore(total);
     setShowScore(true);
   };
 
   if (showScore) {
     return (
-      <div style={styles.container}>
-        <h2>Your Risk Score</h2>
-        <h1 style={{ color: "green" }}>{score} / 100</h1>
-        <p>(Higher score = better financial preparedness)</p>
+      <div style={styles.centered}>
+        <div style={styles.dialog}>
+          <h2>Your Financial Preparedness Score</h2>
+          <h1 style={{ color: "green" }}>{score} / 100</h1>
+          <p>(Higher score = better preparedness)</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={styles.container}>
-      <h3>
-        Question {step + 1} of {questions.length}
-      </h3>
-      <progress
-        value={step + 1}
-        max={questions.length}
-        style={{ width: "100%", height: "20px", marginBottom: "20px" }}
-      />
-      <h2>{questions[step].question}</h2>
-      <input
-        type="text"
-        placeholder="Your answer"
-        value={answers[questions[step].key] || ""}
-        onChange={(e) =>
-          setAnswers({ ...answers, [questions[step].key]: e.target.value })
-        }
-        style={styles.input}
-      />
-      <button onClick={handleNext} style={styles.button}>
-        {step === questions.length - 1 ? "Finish" : "Next"}
-      </button>
+    <div style={styles.centered}>
+      <div style={styles.dialog}>
+        <h3>
+          Question {step + 1} of {questions.length}
+        </h3>
+        <p style={styles.questionText}>{currentQuestion.question}</p>
+
+        <div style={styles.optionList}>
+          {currentQuestion.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleOptionSelect(option)}
+              style={{
+                ...styles.optionButton,
+                backgroundColor:
+                  answers[currentQuestion.key] === option.value
+                    ? "#4ade80"
+                    : "#e5e7eb",
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        <progress
+          value={step + 1}
+          max={questions.length}
+          style={styles.progress}
+        />
+      </div>
     </div>
   );
 }
 
 const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "auto",
-    padding: "20px",
+  centered: {
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f3f4f6",
     fontFamily: "Arial, sans-serif",
+  },
+  dialog: {
+    backgroundColor: "#ffffff",
+    borderRadius: "10px",
+    padding: "30px",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    width: "100%",
+    maxWidth: "450px",
     textAlign: "center",
   },
-  input: {
-    width: "100%",
-    padding: "10px",
-    fontSize: "16px",
+  questionText: {
+    fontSize: "18px",
     marginBottom: "20px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
   },
-  button: {
-    padding: "10px 20px",
+  optionList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    marginBottom: "20px",
+  },
+  optionButton: {
+    padding: "12px",
     fontSize: "16px",
-    backgroundColor: "#4ade80",
-    border: "none",
     borderRadius: "5px",
-    color: "white",
+    border: "none",
     cursor: "pointer",
+    transition: "0.2s",
+  },
+  progress: {
+    width: "100%",
+    height: "10px",
+    marginTop: "20px",
   },
 };
