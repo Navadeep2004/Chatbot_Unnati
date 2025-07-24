@@ -1,0 +1,11 @@
+DBNAME-UNNATI_CHATBOT
+
+Table - User_data
+columns-
+user_id, first_name, last_name
+
+
+Table - user_financial_profile
+columns-
+user_id,Age_group,occupation,income_range,financial_confidence, financial_awareness, risk-profile, financial_goals
+
